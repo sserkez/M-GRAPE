@@ -7,7 +7,7 @@
 
  
 function [d]=outread(nm_p,readoutput,readdfl,readm)
-scriptversion='2.6_tmp';
+scriptversion='2.7';
 
     fprintf('\r');
     disp(['---',nm_p,'---']);
@@ -82,7 +82,7 @@ if (readm~=0  && 1 && exist([nm_p,'.mat'],'file') && date_mat>date_out &&  strcm
 %     end
     
     disp('  +done');
-    disp(' ');
+%    disp(' ');
 else
 
     if ~strcmp(scriptversion,matfile_vervion)
@@ -419,7 +419,7 @@ end
     fprintf('   +done\r');
     
     fprintf(' +end of import');
-    disp(' ');
+  %  disp(' ');
 
 end
 

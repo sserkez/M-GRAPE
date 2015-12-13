@@ -168,10 +168,11 @@ nm_p{1}='c:\-D-\Work\SASE3_SXRSS\1000_u1.out';
 nm_p{1}=['C:\-D-\Work\LCLS\tmp\3\s-n study\1\700_u1_',num2str(1),'.out'];
 nm_p{1}='c:\-D-\Work\SASE3_SXRSS\tdp_3\U1.1.out';
  nm_p{1}='C:\-D-\Work\SASE3_chicane\630_250\statrun1\U1.81.out';
- nm_p{2}='C:\-D-\Work\SASE3_chicane\630_250\statrun1\U2.81.out';
+ %nm_p{2}='C:\-D-\Work\SASE3_chicane\630_250\statrun1\U2.81.out';
  
  nm_p{1}='C:\-D-\Work\SASE3_chicane\run7\U1.2.out';
- nm_p{2}='C:\-D-\Work\SASE3_chicane\run7\U2.2.out';
+ nm_p{1}='C:\-D-\Work\!PROJECTS\Phase_controlled_harmonics\SASE3_v2\1000_u1_tdp.out';
+ %nm_p{2}='C:\-D-\Work\SASE3_chicane\run7\U2.2.out';
 % nm_p{1}='C:\-D-\Work\SASE3_chicane\630_250\Gianluca\run.0.s1.gout';
 %nm_p{1}='C:\-D-\Work\SASE3_chicane\630_250\Gianluca\run.0.s3.gout';
 % nm_p{1}='c:\-D-\Work\LCLS\Thesis_source\1200_u1_1.out';
@@ -242,8 +243,8 @@ end
 % 
 %% Bunch profile parameters at given position
 
-Di=2;
-Z=160; %[m]
+Di=1;
+Z=1; %[m]
 
 outplot_z(4,d(Di),Z);
 
