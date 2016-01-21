@@ -20,19 +20,19 @@ set(fig3,'name',['Bunch ',d.nm_p],'numbertitle','off');
 
 
 H.h3.h1=subplot(Nplots,1,1);
-[haxes,hline(1),hline(2)] = plotyy(d.outp.Sscale,d.outp.current,d.outp.Sscale,d.outp.power.v(:,Zi));
-ylabel(haxes(1),'I [A]');
-ylabel(haxes(2),'P [W]');
-xlabel(haxes(2),'s [m]');
-set(haxes,{'ycolor'},{'k';[0 0.5 0]})
+[haxes1,hline(1),hline(2)] = plotyy(d.outp.Sscale,d.outp.current,d.outp.Sscale,d.outp.power.v(:,Zi));
+ylabel(haxes1(1),'I [A]');
+ylabel(haxes1(2),'P [W]');
+xlabel(haxes1(2),'s [m]');
+set(haxes1,{'ycolor'},{'k';[0 0.5 0]})
 %xlabel(haxes(2),'z [m]');
 set(hline(1),'LineWidth',0.5,'color','k','linestyle','--');
 set(hline(2),'LineWidth',1.5,'color',[0 0.5 0]);
 for i=1:2
-    set(haxes(i),'XLim',[minsc maxsc]);
+    set(haxes1(i),'XLim',[minsc maxsc]);
 end
-set(haxes(1),'box','off','Ylim',[0 max(d.outp.current)]);
-set(haxes(2),'Ylim',[0 max(d.outp.power.v(:,Zi))]);
+set(haxes1(1),'box','off','Ylim',[0 max(d.outp.current)]);
+set(haxes1(2),'Ylim',[0 max(d.outp.power.v(:,Zi))]);
 title(['Z=',num2str(Z),'m']);
 text(0,1,sprintf(' q ~ %.3f nC', d.inp.charge*1e9),...
                         'HorizontalAlignment','left','VerticalAlignment',...
@@ -125,6 +125,6 @@ xlabel('s [m]');
                         'HorizontalAlignment','center','VerticalAlignment',...
                         'top','FontSize',8,'units','normalized');
 
-
+Handle=linkprop([haxes1(1) haxes1(2) haxes2(1) haxes2(2) haxes3(1) haxes3(2)], 'XLim');
 clear fig3 haxes hline
 return

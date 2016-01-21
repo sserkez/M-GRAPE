@@ -96,8 +96,8 @@ YP=YP./E;
 %T=T-min(min(T));
 
 %%
-skipstep=round(numel(T)/200000);
-%skipstep=6;
+%skipstep=round(numel(T)/200000);
+skipstep=6;
 index=ones(size(T,2),1);
 index(1:skipstep:end)=round(0);
 index=index==1;

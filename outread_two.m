@@ -171,7 +171,11 @@ nm_p{1}='c:\-D-\Work\SASE3_SXRSS\tdp_3\U1.1.out';
  %nm_p{2}='C:\-D-\Work\SASE3_chicane\630_250\statrun1\U2.81.out';
  
  nm_p{1}='C:\-D-\Work\SASE3_chicane\run7\U1.2.out';
- nm_p{1}='C:\-D-\Work\!PROJECTS\Phase_controlled_harmonics\SASE3_v2\1000_u1_tdp.out';
+ nm_p{1}='D:\Work\!PROJECTS\Phase_controlled_harmonics\SASE3_v3\stage_1.out';
+ %nm_p{2}='D:\Work\!PROJECTS\Phase_controlled_harmonics\SASE3_v3\stage_2.out';
+ 
+ nm_p{2}='D:\Work\!PROJECTS\ocelot_test\test_11\run_0\run.0.s1.gout';
+ %nm_p{2}=[];
  %nm_p{2}='C:\-D-\Work\SASE3_chicane\run7\U2.2.out';
 % nm_p{1}='C:\-D-\Work\SASE3_chicane\630_250\Gianluca\run.0.s1.gout';
 %nm_p{1}='C:\-D-\Work\SASE3_chicane\630_250\Gianluca\run.0.s3.gout';
@@ -197,8 +201,8 @@ H{2}=outpot_ph(2,d(Di));
 
 if DiN==2
     Di=2;
-    outpot_e(11,d(Di))
-    outpot_ph(21,d(Di))
+    H{11}=outpot_e(11,d(Di));
+    H{12}=outpot_ph(21,d(Di));
 end
 
 % span=1;
@@ -244,15 +248,21 @@ end
 %% Bunch profile parameters at given position
 
 Di=1;
-Z=1; %[m]
-
-outplot_z(4,d(Di),Z);
-
+Z=100; %[m]
+H{4}=outplot_z(4,d(Di),Z);
+try
+    Z=100;
+    H{14}=outplot_z(5,d(Di+1),Z);
+catch
+end
+%% Wigner distribution at given position
+Di=1;
+Z=10; %[m]
 Zi=find(d(Di).outp.Zscale<=Z,1,'last');
 
 Ex=sqrt(d(Di).outp.p_mid.v(:,Zi)).*exp(1i*d(Di).outp.phi_mid.v(:,Zi));
-figure(6995)
-plot(d(Di).outp.Sscale,abs(Ex).^2);
+% figure(6995)
+% plot(d(Di).outp.Sscale,abs(Ex).^2);
 
 % addpath('c:\-D-\Work\LCLS\New_matlab\tftb-0.2\mfiles');
 
@@ -276,11 +286,11 @@ Lamdscale=2*pi./Kscale;
 clear Kscale
 imagesc(d(Di).outp.Sscale,Lamdscale,W'.^2);
 
-
+break
 %% Make GIF
 %break
 Di=1;
-Z=1; %[m]d
+Z=0.1; %[m]d
 Nframes=100;
 outplot_z(4,d(Di),Z);
 % Z = peaks;

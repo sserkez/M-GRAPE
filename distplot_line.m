@@ -1,6 +1,7 @@
 %function distplot(fignum,dist,index_range)
 clear all
-dist=distread('C:\-D-\Work\LCLS\tmp\3\930_tdp\Slotted_mm\slotted_mw.dist');
+%dist=distread('C:\-D-\Work\LCLS\tmp\3\930_tdp\Slotted_mm\slotted_mw.dist');
+dist=distread('D:\Work\!PROJECTS\Phase_controlled_harmonics\SASE3_v3\beam_0.1nC_sase1_12kev_fresh1');
 %%
 %dist='c:\-D-\Work\LCLS\tmp\dist_1000.dat';
 fignum=2631;
