@@ -20,19 +20,19 @@ set(fig3,'name',['Bunch ',d.nm_p],'numbertitle','off');
 
 
 H.h3.h1=subplot(Nplots,1,1);
-[haxes,hline(1),hline(2)] = plotyy(d.outp.Sscale,d.outp.current,d.outp.Sscale,d.outp.power.v(:,Zi));
-ylabel(haxes(1),'I [A]');
-ylabel(haxes(2),'P [W]');
-xlabel(haxes(2),'s [m]');
-set(haxes,{'ycolor'},{'k';[0 0.5 0]})
+[haxes1,hline(1),hline(2)] = plotyy(d.outp.Sscale,d.outp.current,d.outp.Sscale,d.outp.power.v(:,Zi));
+ylabel(haxes1(1),'I [A]');
+ylabel(haxes1(2),'P [W]');
+xlabel(haxes1(2),'s [m]');
+set(haxes1,{'ycolor'},{'k';[0 0.5 0]})
 %xlabel(haxes(2),'z [m]');
 set(hline(1),'LineWidth',0.5,'color','k','linestyle','--');
 set(hline(2),'LineWidth',1.5,'color',[0 0.5 0]);
 for i=1:2
-    set(haxes(i),'XLim',[minsc maxsc]);
+    set(haxes1(i),'XLim',[minsc maxsc]);
 end
-set(haxes(1),'box','off','Ylim',[0 max(d.outp.current)]);
-set(haxes(2),'Ylim',[0 max(d.outp.power.v(:,Zi))]);
+set(haxes1(1),'box','off','Ylim',[0 max(d.outp.current)]);
+set(haxes1(2),'Ylim',[0 max(d.outp.power.v(:,Zi))]);
 title(['Z=',num2str(Z),'m']);
 text(0,1,sprintf(' q ~ %.3f nC', d.inp.charge*1e9),...
                         'HorizontalAlignment','left','VerticalAlignment',...
@@ -68,7 +68,7 @@ text(1,1,sprintf('E = %.3e J ', d.outp.power.E(Zi)),...
 
 H.h3.h2=subplot(Nplots,1,2);
 %[haxes,hline(1),hline(2)] = plotyy(d.outp.Sscale,d.outp.energy.v(:,Zi)+d.inp.gamma0,d.outp.Sscale,d.outp.bunching.v(:,Zi));
-plot(d.outp.Sscale,d.outp.energy.v(:,Zi)+d.inp.gamma0,'linewidth',1.5);
+haxes2=plot(d.outp.Sscale,d.outp.energy.v(:,Zi)+d.inp.gamma0,'linewidth',1.5);
 hold on
 % hline(3)=line(d.outp.Sscale,d.outp.energy.v(:,Zi)+d.inp.gamma0-d.outp.e_spread.v(:,Zi),'linewidth',0.5,'linestyle','--','color','r','parent',haxes(1));
 % hline(4)=line(d.outp.Sscale,d.outp.energy.v(:,Zi)+d.inp.gamma0+d.outp.e_spread.v(:,Zi),'linewidth',0.5,'linestyle','--','color','r','parent',haxes(1));
@@ -89,7 +89,7 @@ legend('<\gamma>','+/- \sigma_\gamma')
 
 
 H.h3.h5=subplot(Nplots,1,4);
-plot(d.outp.Lamdscale*1e9,d.outp.spectrum_mid.v(:,Zi),'linewidth',1.5,'color','r');
+haxes3=plot(d.outp.Lamdscale*1e9,d.outp.spectrum_mid.v(:,Zi),'linewidth',1.5,'color','r');
 axis tight
 ylabel('P(\lambda) [a.u.]');
 xlabel('\lambda [nm]');
@@ -111,7 +111,7 @@ text(1,1,sprintf('(on axis)  '), ...
 % xlabel(haxes(2),'s [m]');
 
 H.h3.h4=subplot(Nplots,1,3);
-plot(d.outp.Sscale,[0; diff(unwrap(d.outp.phi_mid.v(:,Zi)))],'color','k');
+haxes4=plot(d.outp.Sscale,[0; diff(unwrap(d.outp.phi_mid.v(:,Zi)))],'color','k');
 hold on
 line(d.outp.Sscale,linspace(0,0,d.outp.Sn),'color','k','linestyle','--');
 hold off
@@ -125,6 +125,7 @@ xlabel('s [m]');
                         'HorizontalAlignment','center','VerticalAlignment',...
                         'top','FontSize',8,'units','normalized');
 
-
+%H=linkprop([haxes1 haxes2 haxes3 haxes4], 'XLim');
+%H=linkaxes([H.h3.h1 H.h3.h2 H.h3.h5 H.h3.h4], 'x');
 clear fig3 haxes hline
 return

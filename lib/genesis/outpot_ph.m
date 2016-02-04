@@ -7,17 +7,20 @@ set(fig2,'name',['Photons ',d.nm_p],'numbertitle','off');
  H.h2.h1=subplot(3,1,1);
  [haxes1,hline(1),hline(2)] = plotyy(d.outp.Zscale,d.outp.power.max_S,d.outp.Zscale,d.outp.power.E,'semilogy','semilogy');
 
- axis tight
- set(haxes1(1),'YTick',[1e1 1e2 1e3 1e4 1e5 1e6 1e7 1e8 1e9 1e10 1e11 1e12 1e13 1e14 1e15],'YMinorTick','on','XMinorGrid','off');
- set(haxes1(2),'YTick',[1e-15 1e-14 1e-13 1e-12 1e-11 1e-10 1e-9 1e-8 1e-7 1e-6 1e-5 1e-4 1e-3 1e-2 1e-1 1],'YMinorTick','on','XMinorGrid','off');
- set(haxes1(1), 'YMinorTick','on');
- set(haxes1(2), 'YMinorTick','on');
-     for i=1:2
-        set(haxes1(i),'XLim',[d.outp.Zscale(1) d.outp.Zscale(end)]);
-            %set(haxes(i),'axis','tight');
-        axis tight
-     end
-     set(haxes1(2),'YLim',[min(d.outp.power.E) max(d.outp.power.E)]);
+axis tight
+set(haxes1(1),'YTick',[1e1 1e2 1e3 1e4 1e5 1e6 1e7 1e8 1e9 1e10 1e11 1e12 1e13 1e14 1e15],'YMinorTick','on','XMinorGrid','off');
+set(haxes1(2),'YTick',[1e-15 1e-14 1e-13 1e-12 1e-11 1e-10 1e-9 1e-8 1e-7 1e-6 1e-5 1e-4 1e-3 1e-2 1e-1 1],'YMinorTick','on','XMinorGrid','off');
+set(haxes1(1), 'YMinorTick','on');
+set(haxes1(2), 'YMinorTick','on');
+for i=1:2
+    set(haxes1(i),'XLim',[d.outp.Zscale(1) d.outp.Zscale(end)]);
+        %set(haxes(i),'axis','tight');
+    axis tight
+end
+
+if min(d.outp.power.E)~=max(d.outp.power.E)
+    set(haxes1(2),'YLim',[min(d.outp.power.E) max(d.outp.power.E)]);
+end
     set(haxes1(1),'box','off');
     set(hline(1),'LineWidth',2,'color','r');
     set(hline(2),'LineWidth',2,'linestyle','--','color','b');

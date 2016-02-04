@@ -1,9 +1,11 @@
 %compare amplitudes and phases of the radiation obtained from .out files
 clear all
 
- nm_p{1}='D:\Work\!PROJECTS\Phase_controlled_harmonics\SASE3_v3\stage_1.out';
- nm_p{2}='D:\Work\!PROJECTS\Phase_controlled_harmonics\SASE3_v3\stage_2.out';
+nm_p{1}='D:\Work\!PROJECTS\Phase_controlled_harmonics\SASE3_v4\stage_1.out';
+nm_p{2}='D:\Work\!PROJECTS\Phase_controlled_harmonics\SASE3_v4\stage_2.out';
  
+nm_p{1}='D:\Work\!PROJECTS\ocelot_test\test_13\run_0\run.0.s1.gout';
+nm_p{2}='D:\Work\!PROJECTS\ocelot_test\test_13\run_0\run.0.s3.gout';
 
  %% Import from .out
  
@@ -16,10 +18,25 @@ clear all
 end
 disp ('------------end-of-import-------------');
 
+%%
+Sn=min(d(1).outp.Sn,d(2).outp.Sn);
+
+
+ for Di=1:2 %Data index
+        d(Di).outp.Sscale=d(Di).outp.Sscale(1:Sn);
+        d(Di).outp.power.v=d(Di).outp.power.v(1:Sn,:);
+        d(Di).outp.p_mid.v=d(Di).outp.p_mid.v(1:Sn,:);
+        d(Di).outp.phi_mid.v=d(Di).outp.phi_mid.v(1:Sn,:);
+end
+
+
+
 %% General plots
 
+phasezoom_value=0.5; %if 0 -> no zoom
+
 Z1=100; %[m]
-Z2=20;
+Z2=12;
 
 
 % H{1}=outpot_e(1,d(1));
@@ -64,7 +81,7 @@ Z2=Zscale2(Zi2);
 minsc2=min(Sscale2);
 maxsc2=max(Sscale2);
 
-shift_points=3;
+shift_points=0;
 d(1).outp.power.v=circshift(d(1).outp.power.v,[shift_points 0]);
 d(1).outp.phi_mid.v=circshift(d(1).outp.phi_mid.v,[shift_points 0]);
 amplitude1=sqrt(d(1).outp.power.v(:,Zi1));
@@ -122,7 +139,11 @@ hold off
 title('radiation phase (1-st stage values are scaled by \lambda_1/\lambda_2)')
 xlabel('[m]');
 ylabel('[rad]');
-ylim([-pi pi]);
+if phasezoom_value==0
+    ylim([-pi pi]);
+else
+    ylim([-phasezoom_value phasezoom_value]);
+end
 
 ax4=subplot(2,2,4);
 hline3=plot(Sscale1,phase2-phase1,'LineWidth',1,'color','k','linestyle','-'); %would not work with different Sscales!!!!!!!!!
@@ -132,8 +153,11 @@ hold off
 title('radiation phase difference')
 xlabel('[m]');
 ylabel('[rad]');
-ylim([-pi pi]);
-
+if phasezoom_value==0
+    ylim([-pi pi]);
+else
+    ylim([-phasezoom_value phasezoom_value]);
+end
 linkaxes([ax1 ax2 ax3 ax4],'x');
 xlim([max([minsc1 minsc2]) min([maxsc1 maxsc2])])
 %Handle=linkprop([hline1(1) hline1(2) hline2(1) hline2(2) hline3], 'XLim');

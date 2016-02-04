@@ -1,5 +1,5 @@
 %% Propagation parameters
-cd('c:\-D-\Work\SASE3_SXRSS\ICF\');
+cd('D:\Work\!PROJECTS\SXRSS_ICF\XFEL\');
 %%
 %Theta_g_d=0;
 clear all;

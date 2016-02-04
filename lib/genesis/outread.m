@@ -111,16 +111,16 @@ else
     ie=find(strcmp(A(1:200),'$end'))-1;
 
     for i=is:ie
-    k=strfind(A{i},'D');
-    A{i}(k)='E';
+        k=strfind(A{i},'D');
+        A{i}(k)='E';
 
-    k=strfind(A{i},'='); 
-    var=genvarname(lower(sscanf(A{i}(1:k-1),'%c')));
-    val=single(sscanf(A{i}(k+1:end),'%f'));
-    if isempty(val)
-        val=sscanf(A{i}(k+1:end),'%s');
-    end
-    eval(['inp.' var '=val;']);
+        k=strfind(A{i},'='); 
+        var=genvarname(lower(sscanf(A{i}(1:k-1),'%c')));
+        val=single(sscanf(A{i}(k+1:end),'%f'));
+        if isempty(val)
+            val=sscanf(A{i}(k+1:end),'%s');
+        end
+        eval(['inp.' var '=val;']);
     end
     outp.Zn=round(inp.zstop/inp.xlamd/inp.iphsty+1);
     outp.Sn=round((numel(A)-(181+outp.Zn+2+7))/(outp.Zn+8))/inp.ishsty;

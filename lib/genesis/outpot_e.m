@@ -14,8 +14,9 @@ set(hline1(2),'LineWidth',2,'color','r');
 for i=1:2
     set(haxes1(i),'XLim',[d.outp.Zscale(1) d.outp.Zscale(end)]);
 end
-set(haxes1(2),'YLim',[min(d.outp.qfld)*1.1 max(d.outp.qfld)*1.1]);
-
+if min(d.outp.qfld)~=max(d.outp.qfld)
+    set(haxes1(2),'YLim',[min(d.outp.qfld)*1.1 max(d.outp.qfld)*1.1]);
+end
 
 Ku=d.outp.aw(d.outp.aw~=0);
 Ku=Ku-max(Ku);
