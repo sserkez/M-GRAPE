@@ -1,12 +1,29 @@
 %compare amplitudes and phases of the radiation obtained from .out files
 clear all
+% 
+% nm_p{1}='D:\Work\!PROJECTS\Phase_controlled_harmonics\old matlab-based\SASE3_v3\stage_1.out';
+% nm_p{2}='D:\Work\!PROJECTS\Phase_controlled_harmonics\old matlab-based\SASE3_v3\stage_2.out';
+%  
+% % nm_p{1}='D:\Work\!PROJECTS\ocelot_test\test_13\run_0\run.0.s1.gout';
+% % nm_p{2}='D:\Work\!PROJECTS\ocelot_test\test_13\run_0\run.0.s3.gout';
+% % 
+% % nm_p{1}='D:\Work\!PROJECTS\Phase_controlled_harmonics\test_init\run.0.s1.gout';
+% % nm_p{2}='D:\Work\!PROJECTS\Phase_controlled_harmonics\test_init\run.0.s3.gout';
+% 
+% nm_p{1}='D:\Work\!PROJECTS\Phase_controlled_harmonics\SASE_v1\run_1\run.1.s1.gout';
+%  
+% nm_p{1}='D:\Work\!PROJECTS\Phase_controlled_harmonics\Seed_v1\run_1\run.1.s3.gout';
+% nm_p{2}='D:\Work\!PROJECTS\Phase_controlled_harmonics\Seed_v1\run_1\run.1.s4.gout';
+% 
+% nm_p{1}='D:\Work\!PROJECTS\Phase_controlled_harmonics\SASE_v1\run_0\run.0.s1.gout';
+% nm_p{2}='D:\Work\!PROJECTS\Phase_controlled_harmonics\SASE_v1\run_0\run.0.s3.gout';
+% 
+% nm_p{1}='D:\Work\!PROJECTS\Phase_controlled_harmonics\Seed_v1\run_1\run.1.s3.gout';
+% nm_p{2}='D:\Work\!PROJECTS\Phase_controlled_harmonics\Seed_v1\run_1\run.1.s4.gout';
 
-nm_p{1}='D:\Work\!PROJECTS\Phase_controlled_harmonics\SASE3_v4\stage_1.out';
-nm_p{2}='D:\Work\!PROJECTS\Phase_controlled_harmonics\SASE3_v4\stage_2.out';
- 
-nm_p{1}='D:\Work\!PROJECTS\ocelot_test\test_13\run_0\run.0.s1.gout';
-nm_p{2}='D:\Work\!PROJECTS\ocelot_test\test_13\run_0\run.0.s3.gout';
 
+nm_p{1}='D:\Work\!PROJECTS\Phase_controlled_harmonics\Seed_v4\run_0\run.0.s3.gout';
+nm_p{2}='D:\Work\!PROJECTS\Phase_controlled_harmonics\Seed_v4\run_0\run.0.s4.gout';
  %% Import from .out
  
  for Di=1:2 %Data index
@@ -29,15 +46,13 @@ Sn=min(d(1).outp.Sn,d(2).outp.Sn);
         d(Di).outp.phi_mid.v=d(Di).outp.phi_mid.v(1:Sn,:);
 end
 
-
-
 %% General plots
 
-phasezoom_value=0.5; %if 0 -> no zoom
+phasezoom_value=0; %if 0 -> no zoom
 
 Z1=100; %[m]
-Z2=12;
-
+Z2=100;
+shift_points=0;
 
 % H{1}=outpot_e(1,d(1));
 % H{2}=outpot_ph(2,d(1));
@@ -56,6 +71,8 @@ Zscale2=d(2).outp.Zscale;
 xlamds1=d(1).inp.xlamds*1e9;
 xlamds2=d(2).inp.xlamds*1e9;
 
+Sscale1=Sscale1*1e6;
+Sscale2=Sscale2*1e6;
 
 if Z1>max(Zscale1)
     disp('Z1 parameter exceeds data limits');
@@ -81,7 +98,7 @@ Z2=Zscale2(Zi2);
 minsc2=min(Sscale2);
 maxsc2=max(Sscale2);
 
-shift_points=0;
+
 d(1).outp.power.v=circshift(d(1).outp.power.v,[shift_points 0]);
 d(1).outp.phi_mid.v=circshift(d(1).outp.phi_mid.v,[shift_points 0]);
 amplitude1=sqrt(d(1).outp.power.v(:,Zi1));
@@ -89,8 +106,8 @@ amplitude2=sqrt(d(2).outp.power.v(:,Zi2));
 
 
 
-A1=max(amplitude1);
-A2=max(amplitude2);
+A1=sum(amplitude1);
+A2=sum(amplitude2);
 
 % figure(6)
 % clf
@@ -101,7 +118,10 @@ A2=max(amplitude2);
 % set(hline(2),'LineWidth',2,'color','b','linestyle','-');
 % legend(num2str(xlamds1),num2str(xlamds2))
 
-figure(7)
+
+
+fig=figure(7);
+set(fig, 'Position', [100, 100, 1000, 620]);
 clf;
 ax1=subplot(2,2,1);
 %hline1(1)=plot(Sscale1,amplitude1/A1,'LineWidth',1,'color','r','linestyle','-');
@@ -110,22 +130,29 @@ hold on
 %hline1(2)=plot(Sscale2,amplitude2/A2,'LineWidth',1,'color','b','linestyle','-');
 hline1(2)=plot(Sscale2,amplitude2,'LineWidth',1,'color','b','linestyle','-');
 hold off
-legend(['\lambda_1=',num2str(xlamds1),'nm'],['\lambda_2=',num2str(xlamds2),'nm \newlineZ_2=',num2str(Z2),'m'])
-title(['radiation amplitude envelopes normalized by peak values ratio ',num2str(A1/min(A1,A2)),':',num2str(A2/min(A1,A2))]);
+% legend(['\lambda_1=',num2str(xlamds1),'nm'],['\lambda_2=',num2str(xlamds2),'nm \newlineZ_2=',num2str(Z2),'m'])
+legend(['\lambda_1=',num2str(xlamds1,3) 'nm'],['\lambda_2=',num2str(xlamds2,3),'nm'])
+% title(['radiation amplitude envelopes normalized by peak values ratio ',num2str(A1/min(A1,A2)),':',num2str(A2/min(A1,A2))]);
+title('radiation amplitude envelopes');
+xlabel('[\mum]');
+ylabel('arb. units');
 
 ax2=subplot(2,2,2);
 
-if A2>=A1
+% if A2>=A1
 plot(Sscale1,amplitude2./amplitude1,'LineWidth',1,'color','k','linestyle','-');
-else
-plot(Sscale1,amplitude1./amplitude2,'LineWidth',1,'color','k','linestyle','-');
-end
+% else
+% plot(Sscale1,amplitude1./amplitude2,'LineWidth',1,'color','k','linestyle','-');
+% end
 title('amplitude envelopes ratio')
+xlabel('[\mum]');
 
+% phase1=[0; diff(unwrap((xlamds1/xlamds2).*d(1).outp.phi_mid.v(:,Zi1)))];
+% %old and not right
+% phase2=[0; diff(unwrap(d(2).outp.phi_mid.v(:,Zi2)))];
 
-phase1=[0; diff(unwrap((xlamds1/xlamds2).*d(1).outp.phi_mid.v(:,Zi1)))];
-phase2=[0; diff(unwrap(d(2).outp.phi_mid.v(:,Zi2)))];
-
+phase1=unwrap((xlamds1/xlamds2).*d(1).outp.phi_mid.v(:,Zi1));
+phase2=unwrap(d(2).outp.phi_mid.v(:,Zi2));
 
 % figure(8)
 % clf
@@ -136,11 +163,12 @@ hline2(2)=plot(Sscale2,phase2,'LineWidth',1,'color','b','linestyle','-');
 line([minsc1,maxsc1],[0,0],'color','k','linestyle','--');
 hold off
 %legend(['\lambda_1=',num2str(xlamds1),'nm'],['\lambda_2=',num2str(xlamds2),'nm'])
-title('radiation phase (1-st stage values are scaled by \lambda_1/\lambda_2)')
-xlabel('[m]');
+% title('radiation phase (1-st stage values are scaled by \lambda_1/\lambda_2)')
+title('radiation phase')
+xlabel('[\mum]');
 ylabel('[rad]');
 if phasezoom_value==0
-    ylim([-pi pi]);
+%     ylim([-pi pi]);
 else
     ylim([-phasezoom_value phasezoom_value]);
 end
@@ -150,14 +178,16 @@ hline3=plot(Sscale1,phase2-phase1,'LineWidth',1,'color','k','linestyle','-'); %w
 hold on
 line([minsc1,maxsc1],[0,0],'color','k','linestyle','--');
 hold off
-title('radiation phase difference')
-xlabel('[m]');
+title('phase difference')
+xlabel('[\mum]');
 ylabel('[rad]');
 if phasezoom_value==0
-    ylim([-pi pi]);
+%     ylim([-pi pi]);
 else
     ylim([-phasezoom_value phasezoom_value]);
 end
 linkaxes([ax1 ax2 ax3 ax4],'x');
 xlim([max([minsc1 minsc2]) min([maxsc1 maxsc2])])
 %Handle=linkprop([hline1(1) hline1(2) hline2(1) hline2(2) hline3], 'XLim');
+
+% xlim([4 8])

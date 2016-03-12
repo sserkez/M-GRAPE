@@ -110,14 +110,20 @@ text(1,1,sprintf('(on axis)  '), ...
 % ylabel(haxes(2),'\Delta\Phi [rad]');
 % xlabel(haxes(2),'s [m]');
 
+phase=unwrap(d.outp.phi_mid.v(:,Zi));
+%phase=phase-d.outp.Sscale./d.inp.xlamds;
+
+
 H.h3.h4=subplot(Nplots,1,3);
-haxes4=plot(d.outp.Sscale,[0; diff(unwrap(d.outp.phi_mid.v(:,Zi)))],'color','k');
+% haxes4=plot(d.outp.Sscale,[0; diff(unwrap(d.outp.phi_mid.v(:,Zi)))],'color','k');
+haxes4=plot(d.outp.Sscale,phase,'color','k');
 hold on
 line(d.outp.Sscale,linspace(0,0,d.outp.Sn),'color','k','linestyle','--');
 hold off
 
 xlim([minsc maxsc]);
-ylim([-pi/4 pi/4]);
+%ylim([-pi/4 pi/4]);
+
 %ylabel(haxes(1),'\Phi [rad]');
 ylabel('\Delta\Phi [rad]');
 xlabel('s [m]');

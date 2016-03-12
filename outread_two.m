@@ -4,14 +4,34 @@ clear variables
 clear all
 N=1;
 
-% nm_p{1}='D:\Work\!PROJECTS\Phase_controlled_harmonics\SASE3_v3\stage_1.out';
-% nm_p{2}='D:\Work\!PROJECTS\Phase_controlled_harmonics\SASE3_v3\stage_2.out';
+% nm_p{1}='D:\Work\!PROJECTS\Phase_controlled_harmonics\SASE3_v4\stage_1.out';
+% nm_p{2}='D:\Work\!PROJECTS\Phase_controlled_harmonics\SASE3_v4\stage_2.out';
 % 
 % nm_p{1}='D:\Work\!PROJECTS\ocelot_test\test_13\run_0\run.0.s1.gout';
 % nm_p{2}='D:\Work\!PROJECTS\ocelot_test\test_13\run_0\run.0.s3.gout';
 
-nm_p{1}='D:\Work\!PROJECTS\ocelot_test\test_phase_2\run_0\run.0.s1.gout';
+% nm_p{1}='D:\Work\!PROJECTS\Phase_controlled_harmonics\test_init\run.0.s3.gout';
+% nm_p{2}='D:\Work\!PROJECTS\Phase_controlled_harmonics\test_init\run.1.s3.gout';
 
+%  nm_p{1}='D:\Work\!PROJECTS\Phase_controlled_harmonics\SASE_v3\run_14\run.14.s1.gout';
+%  nm_p{2}='D:\Work\!PROJECTS\Phase_controlled_harmonics\SASE_v1\run_25\run.25.s1.gout';
+% nm_p{1}='D:/Work/!PROJECTS/ocelot_test/test_phase_1/run_0/run.0.s1.gout';
+
+% nm_p{1}='D:\Work\!PROJECTS\Phase_controlled_harmonics\Seed_v1\run_1\run.1.s3.gout';
+% nm_p{2}='D:\Work\!PROJECTS\Phase_controlled_harmonics\Seed_v1\run_1\run.1.s4.gout';
+
+% nm_p{1}='D:\Work\!PROJECTS\Phase_controlled_harmonics\Seed_v4\run_0\run.0.s1.gout';
+% nm_p{1}='D:\Work\!PROJECTS\Phase_controlled_harmonics\Seed_v4\run_0\run.0.s3.gout';
+% nm_p{2}='d:\Work\!PROJECTS\UHRIX\full_run\sase2.9keV.2stg.1.out';
+% nm_p{2}='d:\Work\!PROJECTS\UHRIX\full_run\sase2.9keV.2stg.1.out';
+
+% nm_p{1}='D:\Work\!PROJECTS\2016-02-Polarization_control\test_v10\run.0.s2.gout';
+% nm_p{2}='D:\Work\!PROJECTS\2016-02-Polarization_control\test_v12\run.0.s2_850.gout';
+% nm_p{1}='D:\Work\!PROJECTS\2016-02-Polarization_control\test_v12\run.0.s2_850_noqf.gout';
+% nm_p{1}='D:\Work\!PROJECTS\2016-02-Polarization_control\sase3.circle\sase3_15A.0.out';
+
+nm_p{1}='D:\Work\!PROJECTS\2016-02-Polarization_control\test_v3\run.0.gout';
+nm_p{2}='D:\Work\!PROJECTS\2016-02-Polarization_control\test_v3\run.0.s2_jump.gout';
 
 DiN=size(nm_p,2);
 % DiN=1;
@@ -38,17 +58,18 @@ end
 %% Bunch profile parameters at given position
 
 Di=1;
-Z=100; %[m]
+Z=1000; %[m]
 H{4}=outplot_z(4,d(Di),Z);
 try
-    Z=100;
+    Z=0;
+    Z=27;
     H{14}=outplot_z(5,d(Di+1),Z);
 catch
 end
 break
 %% Wigner distribution at given position
 Di=1;
-Z=24; %[m]
+Z=100; %[m]
 Zi=find(d(Di).outp.Zscale<=Z,1,'last');
 
 Ex=sqrt(d(Di).outp.p_mid.v(:,Zi)).*exp(1i*d(Di).outp.phi_mid.v(:,Zi));
